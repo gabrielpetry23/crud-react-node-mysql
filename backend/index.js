@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import mysql from "mysql";
-import userRoutes from "./routes/user.js"; 
+import userRoutes from "./routes/users.js"; 
 
 const app = express();
 
