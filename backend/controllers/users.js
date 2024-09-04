@@ -1,7 +1,7 @@
 import { db } from "../db.js"; //import o mysql
 
 export const getUsers = async (req, res) => {
-  const query = "SELECT * FROM usuarios";
+  const query = "SELECT * FROM users";
 
   db.query(query, (err, data) => {
     if (err) return res.json(err); //se tiver erro retorna json com ele
