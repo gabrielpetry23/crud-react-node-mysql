@@ -7,7 +7,7 @@ import Form from "./components/Form";
 const Container = styled.div`
   width: 100%;
   max-width: 800px;
-  margin-top: 20px auto;
+  margin: 20px auto;
   display: flex;
   flex-direction: column;
   align-items: center;

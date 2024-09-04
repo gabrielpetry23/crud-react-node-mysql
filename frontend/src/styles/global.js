@@ -8,8 +8,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    width: 100vh; //ocupar todo espaço da tela
-    height: 100vh; //ocupar todo espaço da tela
+    width: 100%;
+    height: 100vh; 
     display: flex;
     justify-content: center;
     background-color: #f2f2f2;
