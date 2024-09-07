@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const FormContainer = styled.div`
+const FormContainer = styled.form`
   display: flex;
   align-items: flex-end; //alinhados tudo em baixo
   gap: 10px;

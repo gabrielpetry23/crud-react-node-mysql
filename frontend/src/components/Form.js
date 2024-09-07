@@ -18,12 +18,18 @@ const Form = ({ onEdit, setOnEdit, getUsers }) => {
       user.email.value = onEdit.email;
       user.telefone.value = onEdit.telefone;
       user.data_nascimento.value = onEdit.data_nascimento;
+    } else {
+      // Limpa os campos se não houver edição
+      const user = ref.current;
+      user.nome.value = "";
+      user.email.value = "";
+      user.telefone.value = "";
+      user.data_nascimento.value = "";
     }
   }, [onEdit]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const user = ref.current;
 
     if (
@@ -35,37 +41,40 @@ const Form = ({ onEdit, setOnEdit, getUsers }) => {
       return toast.warn("Preencha todos os campos");
     }
 
-    if (onEdit) {
-      await axios
-        .put("http://localhost:8800/" + onEdit.id, {
+    try {
+      if (onEdit) {
+        // Atualiza usuário existente
+        const { data } = await axios.put("http://localhost:8800/" + onEdit.id, {
           nome: user.nome.value,
           email: user.email.value,
-          fone: user.fone.value,
+          telefone: user.telefone.value,
           data_nascimento: user.data_nascimento.value,
-        })
-        .then(({ data }) => toast.success(data))
-        .catch(({ data }) => toast.error(data));
-    } else {
-      await axios
-        .post("http://localhost:8800", {
+        });
+        toast.success(data);
+      } else {
+        // Cria um novo usuário
+        const { data } = await axios.post("http://localhost:8800", {
           nome: user.nome.value,
           email: user.email.value,
-          fone: user.fone.value,
+          telefone: user.telefone.value,
           data_nascimento: user.data_nascimento.value,
-        })
-        .then(({ data }) => toast.success(data))
-        .catch(({ data }) => toast.error(data));
+        });
+        toast.success(data);
+      }
+
+      // Limpa os campos após submissão
+      user.nome.value = "";
+      user.email.value = "";
+      user.telefone.value = "";
+      user.data_nascimento.value = "";
+
+      setOnEdit(null);
+      getUsers();
+    } catch (error) {
+      // Trata erros na requisição
+      toast.error("Erro ao enviar os dados: " + error.message);
     }
-
-    user.nome.value = "";
-    user.email.value = "";
-    user.fone.value = "";
-    user.data_nascimento.value = "";
-
-    setOnEdit(null);
-    getUsers();
   };
-
 
   return (
     <FormContainer ref={ref} onSubmit={handleSubmit}>

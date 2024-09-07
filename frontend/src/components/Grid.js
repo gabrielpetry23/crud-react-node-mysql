@@ -11,22 +11,29 @@ export const Thead = styled.thead``;
 export const Tr = styled.tr``;
 
 const Grid = ({ users, setUsers, setOnEdit }) => {
-    
+
+  // Função para deletar usuário com async/await e tratamento de erro
   const handleDelete = async (id) => {
-    await axios
-      .delete("http://localhost:8800/" + id)
-      .then(({ data }) => {
-        const newArray = users.filter((user) => user.id !== id);
+    try {
+      const { data } = await axios.delete("http://localhost:8800/" + id);
+      
+      // Atualiza o estado removendo o usuário deletado
+      const newArray = users.filter((user) => user.id !== id);
+      setUsers(newArray);
+      
+      // Exibe mensagem de sucesso
+      toast.success(data);
+    } catch (error) {
+      // Exibe mensagem de erro
+      toast.error("Erro ao deletar o usuário");
+    }
 
-        setUsers(newArray);
-        toast.success(data);
-      })
-      .catch(({ data }) => toast.error(data));
-
+    // Limpa o campo de edição (se houver)
     setOnEdit(null);
   };
 
-  const handleEdit = async (item) => {
+  // Função para editar usuário
+  const handleEdit = (item) => {
     setOnEdit(item);
   };
 
@@ -50,10 +57,10 @@ const Grid = ({ users, setUsers, setOnEdit }) => {
               {item.telefone}
             </Td>
             <Td alignCenter width="5%">
-              <FaEdit onClick={() => handleEdit(item.id)} />
+              <FaEdit onClick={() => handleEdit(item)} style={{ cursor: "pointer" }} />
             </Td>
             <Td alignCenter width="5%">
-              <FaTrash onClick={() => handleDelete(item.id)} />
+              <FaTrash onClick={() => handleDelete(item.id)} style={{ cursor: "pointer" }} />
             </Td>
           </Tr>
         ))}
