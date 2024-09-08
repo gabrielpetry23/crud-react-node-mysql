@@ -12,8 +12,10 @@ const GlobalStyle = createGlobalStyle`
     height: 100vh; 
     display: flex;
     justify-content: center;
-    background-color: #f2f2f2;
-  } 
+    background-color: ${({ theme }) => theme.body};  // Cor de fundo do body
+    color: ${({ theme }) => theme.text};            // Cor do texto
+    transition: background-color 0.3s ease;
+  }
 `;
 
 export default GlobalStyle;
