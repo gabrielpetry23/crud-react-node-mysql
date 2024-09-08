@@ -7,8 +7,21 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-export const Thead = styled.thead``;
+export const Thead = styled.thead`
+  background-color: ${({ theme }) => theme.tableHeaderBackground};
+`;
+
 export const Tr = styled.tr``;
+
+const Icon = styled.div`
+  color: ${({ theme, type }) => theme[`icon${type}Color`]};
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: ${({ theme, type }) => theme[`icon${type}HoverColor`]};
+  }
+`;
 
 const Grid = ({ users, setUsers, setOnEdit }) => {
 
@@ -57,10 +70,14 @@ const Grid = ({ users, setUsers, setOnEdit }) => {
               {item.telefone}
             </Td>
             <Td alignCenter width="5%">
-              <FaEdit onClick={() => handleEdit(item)} style={{ cursor: "pointer" }} />
+              <Icon type="Edit" onClick={() => handleEdit(item)}>
+                <FaEdit />
+              </Icon>
             </Td>
             <Td alignCenter width="5%">
-              <FaTrash onClick={() => handleDelete(item.id)} style={{ cursor: "pointer" }} />
+              <Icon type="Trash" onClick={() => handleDelete(item.id)}>
+                <FaTrash />
+              </Icon>
             </Td>
           </Tr>
         ))}

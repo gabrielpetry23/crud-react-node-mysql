@@ -5,12 +5,13 @@ const Button = styled.button`
   cursor: pointer;
   border-radius: 5px;
   border: none;
-  background-color: #2c73d2;
-  color: white;
+  background-color: ${({ theme }) => theme.buttonBackground};
+  color: ${({ theme }) => theme.buttonText};
   height: 42px;
+  transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #1e5bbd;
+    background-color: ${({ theme }) => theme.buttonHoverBackground};
   }
 `;
 
